@@ -49,3 +49,6 @@ gem 'figaro'
 
 # jwt for token auth
 gem 'jwt'
+
+#serializer
+gem 'active_model_serializers'
