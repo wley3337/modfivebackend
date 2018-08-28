@@ -1,17 +1,18 @@
 class UsersController < ApplicationController
-    include ApplicationController::HttpAuthentication::Token::ControllerMethods
+    
+    include ActionController::HttpAuthentication::Token::ControllerMethods
     before_action :authorized
     skip_before_action :authorized, only: [:login, :create]
 
     def login
         # local strong params
         login_params = params.require(:user).permit(:username, :password)
-        user = User.fin_by(username: login_params["username"])
-        password = longin_params[:password]
+        user = User.find_by(username: login_params["username"])
+        password = login_params[:password]
         
         if user && user.authenticate(password)
             # generates token returns user
-            render json: {success: true, token: generate_token(user), userObj: user}
+            render json: {success: true, token: generate_token(user), userObj: user.serialize_user}
         else 
             # returns false for frontend response
             render json: {success: false}
@@ -22,11 +23,11 @@ class UsersController < ApplicationController
         # local strong params
         new_user_params = params.require(:user).permit(:username, :firstName, :lastName, :startDate, :password)
         user = User.new(username: new_user_params["username"], first_name: new_user_params["firstName"], last_name: new_user_params["lastName"], password: new_user_params["password"], start_date: new_user_params["startDate"], roll: "student")
- 
+        
         if user.valid?
             # validates user creation, logs new user in
             user.save
-            render json: {success: true, token: generate_token(user), userObj: user}
+            render json: {success: true, token: generate_token(user), userObj: user.serialize_user}
         else
             # if validation fails, responds with errors
             render json: {success: false, errors: user.errors.messages}
