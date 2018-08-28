@@ -1,4 +1,4 @@
-class CatagorySerializer < ActiveModel::Serializer
+class CategorySerializer < ActiveModel::Serializer
   has_many :notes
   attributes :id, :name
 

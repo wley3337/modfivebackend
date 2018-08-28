@@ -16,13 +16,13 @@ user1 = User.create(username: "user1", first_name: "user1FristName", last_name: 
 user2 = User.create(username: "user2", first_name: "user2FristName", last_name: "user2LastName", password: "user2123", start_date: "2012-01-01".to_date, roll: "student")
 
 
-c1 = Catagory.create(name: "Mod 1")
-c2 = Catagory.create(name: "Mod 2")
-c3 = Catagory.create(name: "Mod 3")
-c4 = Catagory.create(name: "Mod 4")
-c5 = Catagory.create(name: "Mod 5")
-c6 = Catagory.create(name: "JavaScript")
-c7 = Catagory.create(name: "Ruby")
+c1 = Category.create(name: "Mod 1")
+c2 = Category.create(name: "Mod 2")
+c3 = Category.create(name: "Mod 3")
+c4 = Category.create(name: "Mod 4")
+c5 = Category.create(name: "Mod 5")
+c6 = Category.create(name: "JavaScript")
+c7 = Category.create(name: "Ruby")
 
 n1 = Note.create(note_content: "Lose eyes get fat shew. Winter can indeed letter oppose way change tended now. So is improve my charmed picture exposed adapted demands. Received had end produced prepared diverted strictly off man branched. Known ye money so large decay voice there to. Preserved be mr cordially incommode as an. He doors quick child an point at. Had share vexed front least style off why him. 
 
@@ -42,13 +42,13 @@ n5 = Note.create(note_content: "Maids table how learn drift but purse stand yet 
 
 Travelling alteration impression six all uncommonly. Chamber hearing inhabit joy highest private ask him our believe. Up nature valley do warmly. Entered of cordial do on no hearted. Yet agreed whence and unable limits. Use off him gay abilities concluded immediate allowance.", public: false, user_id: 3)
 
-n1.catagories << c3
-n1.catagories << c6
-n2.catagories << c1
-n2.catagories << c7
-n4.catagories << c4
-n4.catagories << c6
-n5.catagories << c6
+n1.categories << c3
+n1.categories << c6
+n2.categories << c1
+n2.categories << c7
+n4.categories << c4
+n4.categories << c6
+n5.categories << c6
 
 
 user2.notes << n1

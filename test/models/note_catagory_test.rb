@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class NoteCatagoryTest < ActiveSupport::TestCase
+class NoteCategoryTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

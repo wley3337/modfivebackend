@@ -15,15 +15,15 @@ ActiveRecord::Schema.define(version: 2018_08_28_151735) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "catagories", force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "note_catagories", force: :cascade do |t|
+  create_table "note_categories", force: :cascade do |t|
     t.integer "note_id"
-    t.integer "catagory_id"
+    t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
