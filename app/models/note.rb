@@ -12,4 +12,12 @@ class Note < ApplicationRecord
     def self.mine?
         self.all.select { |note| note.user_id == current_user.id}
     end 
+
+    def self.creation(user, content, category_ids)
+    
+        new_note = Note.create(user_id: user.id, note_content: content)
+        category_ids.each{ |id| new_note.categories << Category.find(id)} 
+        new_note.save
+        new_note
+    end 
 end
