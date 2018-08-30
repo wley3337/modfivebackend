@@ -45,9 +45,10 @@ class UsersController < ApplicationController
     def update
        update_params = params.require(:user).permit(:firstName, :lastName, :password, note: {})
        user = current_user
+       public_note = update_params["note"]["public"]
  
        all_category_ids = update_params["note"]["categoryId"] 
-       new_note = Note.creation(user, update_params["note"]["noteObj"],all_category_ids)
+       new_note = Note.creation(user, update_params["note"]["noteObj"],all_category_ids, public_note)
        if update_params["note"]["newCategory"]
         
         new_category = Category.create(name: update_params["note"]["newCategory"])

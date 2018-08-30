@@ -3,7 +3,7 @@ class CreateNotes < ActiveRecord::Migration[5.2]
     create_table :notes do |t|
       t.text :note_content
       t.integer :user_id
-      t.boolean :public
+      t.boolean :public_note
 
       t.timestamps
     end

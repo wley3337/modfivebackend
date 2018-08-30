@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2018_08_28_151735) do
   create_table "notes", force: :cascade do |t|
     t.text "note_content"
     t.integer "user_id"
-    t.boolean "public"
+    t.boolean "public_note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
