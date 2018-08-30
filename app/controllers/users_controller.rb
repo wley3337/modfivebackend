@@ -23,11 +23,13 @@ class UsersController < ApplicationController
     def create
         # local strong params
         new_user_params = params.require(:user).permit(:username, :firstName, :lastName, :startDate, :password)
+        debugger
         user = User.new(username: new_user_params["username"], first_name: new_user_params["firstName"], last_name: new_user_params["lastName"], password: new_user_params["password"], start_date: new_user_params["startDate"], roll: "student")
         
         if user.valid?
             # validates user creation, logs new user in
             user.save
+            @current_user = user
             render json: {success: true, token: generate_token(user), userObj: user.serialize_user}
         else
             # if validation fails, responds with errors
@@ -50,7 +52,6 @@ class UsersController < ApplicationController
        all_category_ids = update_params["note"]["categoryId"] 
        new_note = Note.creation(user, update_params["note"]["noteObj"],all_category_ids, public_note)
        if update_params["note"]["newCategory"]
-        
         new_category = Category.create(name: update_params["note"]["newCategory"])
         new_note.categories << new_category
         user.notes << new_note
