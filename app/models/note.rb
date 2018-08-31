@@ -27,15 +27,10 @@ class Note < ApplicationRecord
     end
 
     def update_note(content, category_ids, public_note)
+        NoteCategory.where(note_id: self.id).delete_all
         self.note_content = content
         self.public_note = public_note
-        category_ids.each do |cat_id| 
-                category = Category.find(cat_id)
-            if !self.categories.include?(category)
-                debugger
-                self.categories << category
-            end
-        end 
+        category_ids.each {|cat_id| self.categories << Category.find(cat_id)}
         self.save
         self
     end
