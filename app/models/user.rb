@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
     # creates a serialized version of user for json token response
     def serialize_user
-        {id: self.id, username: self.username, firstName: self.first_name, lastName: self.last_name, roll: self.roll, startDate: self.start_date, notes: self.notes}
+
+      return  {id: self.id, username: self.username, firstName: self.first_name, lastName: self.last_name, roll: self.roll, startDate: self.start_date, notes: self.notes.map{|note| note.serialize_note}}
     end
 end

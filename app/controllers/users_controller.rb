@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
     
-    include ActionController::HttpAuthentication::Token::ControllerMethods
-    before_action :authenticate
+   
     skip_before_action :authenticate, only: [:login, :create]
 
     def login
@@ -41,23 +40,30 @@ class UsersController < ApplicationController
     # methods below require authentication
     
     def show
-        render json: current_user
+        render json: current_user.serialize_user
     end
 
     def update
        update_params = params.require(:user).permit(:firstName, :lastName, :password, note: {})
        user = current_user
-       public_note = update_params["note"]["public"]
- 
-       all_category_ids = update_params["note"]["categoryId"] 
-       new_note = Note.creation(user, update_params["note"]["noteObj"],all_category_ids, public_note)
+       public_note = update_params["note"]["public"] 
+       all_category_ids = update_params["note"]["categoryId"]
+       if update_params["note"]["noteId"]
+        note_change = Note.find(update_params["note"]["noteId"])
+            if note_change.user_id === user.id
+                note_change.update_note(update_params["note"]["noteObj"],all_category_ids, public_note)
+            else
+                note_change = Note.creation(user, update_params["note"]["noteObj"],all_category_ids, public_note)
+            end
+       elsif
+         note_change = Note.creation(user, update_params["note"]["noteObj"],all_category_ids, public_note)
+       end
        if update_params["note"]["newCategory"]
         new_category = Category.create(name: update_params["note"]["newCategory"])
-        new_note.categories << new_category
-        user.notes << new_note
-        render json: user.serialize_user
+        note_change.categories << new_category
+        user.notes << note_change
        end
-       
+       render json: user.serialize_user
 
    
     end
@@ -69,37 +75,7 @@ class UsersController < ApplicationController
 
 
 
-    private
-
-    # generates the token for front end
-    def generate_token(user)
-        alg = 'HS256'
-        payload = {user_id: user.id}
-        JWT.encode(payload, ENV["SEC_KEY"] , alg)
-    end 
-
-    def current_user
-        @current_user ||= authenticate
-    end 
-
-    # validates token and returns the current user
-    def authenticate
-        
-        authenticate_or_request_with_http_token do |token|
-         
-            begin
-                decoded = decode(token)
-                @current_user = User.find_by(id: decoded[0]["user_id"])
-                
-            rescue JWT::DecodeError
-                render json: {message: "Thow Shall Not Pass"}, status: 401  
-            end
-        end 
-    end 
-
-    def decode(token)
-        JWT.decode(token, ENV["SEC_KEY"], true, { algorithm: 'HS256' })
-    end 
+  
 
    
 
