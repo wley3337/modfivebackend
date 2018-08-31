@@ -8,7 +8,7 @@ class Note < ApplicationRecord
 
    
     def self.public?
-        self.all.select{ |note| note.public_note == true}
+        self.all.select{ |note| note.public_note === true}
     end
 
     # def self.mine?
