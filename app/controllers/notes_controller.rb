@@ -13,7 +13,7 @@ class NotesController < ApplicationController
             
             note.delete
         end 
-        render json: current_user.serialize_user
+        render json:  {success: true,  userObj: current_user.serialize_user}
     end 
 
 end

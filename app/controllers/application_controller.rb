@@ -1,13 +1,14 @@
 class ApplicationController < ActionController::API
     include ActionController::HttpAuthentication::Token::ControllerMethods
     before_action :authenticate
+    
     private
+   
 
     # generates the token for front end
     def generate_token(user)
-        alg = 'HS256'
         payload = {user_id: user.id}
-        JWT.encode(payload, ENV["SEC_KEY"] , alg)
+        JWT.encode(payload, ENV["SEC_KEY"] , 'HS256')
     end 
 
     def current_user
@@ -18,13 +19,12 @@ class ApplicationController < ActionController::API
     def authenticate
         
         authenticate_or_request_with_http_token do |token|
-         
             begin
                 decoded = decode(token)
-                @current_user = User.find_by(id: decoded[0]["user_id"])
+                @current_user = User.find_by(id: decoded[0]["user_id"]) 
                 
             rescue JWT::DecodeError
-                render json: {message: "Thow Shall Not Pass"}, status: 401  
+                render json: {authorized: false }, status: 401  
             end
         end 
     end 
@@ -34,3 +34,17 @@ class ApplicationController < ActionController::API
     end 
     
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+

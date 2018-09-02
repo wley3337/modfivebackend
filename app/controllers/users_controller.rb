@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     # methods below require authentication
     
     def show
-        render json: current_user.serialize_user
+        render json:  {success: true,  userObj: current_user.serialize_user}
     end
 
     def update
@@ -58,12 +58,13 @@ class UsersController < ApplicationController
        elsif
          note_change = Note.creation(user, update_params["note"]["noteObj"],all_category_ids, public_note)
        end
-       if update_params["note"]["newCategory"]
+       if update_params["note"]["newCategory"] != ""
+
         new_category = Category.create(name: update_params["note"]["newCategory"])
         note_change.categories << new_category
         user.notes << note_change
        end
-       render json: user.serialize_user
+       render json: {success: true,  userObj: current_user.serialize_user}
 
    
     end
