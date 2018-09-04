@@ -57,11 +57,14 @@ class UsersController < ApplicationController
        elsif
          note_change = Note.creation(user, update_params["note"]["noteObj"],all_category_ids, public_note)
        end
-       if update_params["note"]["newCategory"] != ""
-
-        new_category = Category.create(name: update_params["note"]["newCategory"])
-        note_change.categories << new_category
-        user.notes << note_change
+       if update_params["note"]["newCategory"].length != 0
+       
+            update_params["note"]["newCategory"].each do |new_cat|
+                debugger
+                new_category = Category.create(name: new_cat)
+                note_change.categories << new_category
+                user.notes << note_change
+            end
        end
        render json: {success: true,  userObj: current_user.serialize_user}
 
