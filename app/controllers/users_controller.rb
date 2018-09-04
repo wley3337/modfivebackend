@@ -22,7 +22,6 @@ class UsersController < ApplicationController
     def create
         # local strong params
         new_user_params = params.require(:user).permit(:username, :firstName, :lastName, :startDate, :password)
-        debugger
         user = User.new(username: new_user_params["username"], first_name: new_user_params["firstName"], last_name: new_user_params["lastName"], password: new_user_params["password"], start_date: new_user_params["startDate"], roll: "student")
         
         if user.valid?
