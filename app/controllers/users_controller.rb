@@ -60,7 +60,6 @@ class UsersController < ApplicationController
        if update_params["note"]["newCategory"].length != 0
        
             update_params["note"]["newCategory"].each do |new_cat|
-                debugger
                 new_category = Category.create(name: new_cat)
                 note_change.categories << new_category
                 user.notes << note_change
