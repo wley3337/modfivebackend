@@ -1,6 +1,8 @@
 class User < ApplicationRecord
     has_many :notes
     accepts_nested_attributes_for :notes
+    has_many :user_references
+    has_many :references, through: :user_references
     validates :username, uniqueness: true, presence: true
     validates :first_name, presence: true
     validates :last_name, presence: true  

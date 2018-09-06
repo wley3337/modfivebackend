@@ -67,3 +67,7 @@ r1.categories << c3
 r1.categories << c8
 r2.categories << c8
 r2.categories << c4
+
+
+user2.references << r1 
+user2.references << r2
