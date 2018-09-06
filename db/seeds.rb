@@ -23,6 +23,7 @@ c4 = Category.create(name: "Mod 4")
 c5 = Category.create(name: "Mod 5")
 c6 = Category.create(name: "JavaScript")
 c7 = Category.create(name: "Ruby")
+c8 = Category.create(name: "React")
 
 n1 = Note.create(note_content: "Lose eyes get fat shew. Winter can indeed letter oppose way change tended now. So is improve my charmed picture exposed adapted demands. Received had end produced prepared diverted strictly off man branched. Known ye money so large decay voice there to. Preserved be mr cordially incommode as an. He doors quick child an point at. Had share vexed front least style off why him. 
 
@@ -58,3 +59,11 @@ user2.notes << n3
 user1.notes << n5
 user1.notes << n4
 
+r1 = Reference.create(title: "React Router Docs", link: "https://reacttraining.com/react-router/web/guides/quick-start")
+
+r2 = Reference.create(title: "Redux", link: "https://redux.js.org/")
+
+r1.categories << c3
+r1.categories << c8
+r2.categories << c8
+r2.categories << c4

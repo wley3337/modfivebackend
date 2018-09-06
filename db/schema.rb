@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_28_151735) do
+ActiveRecord::Schema.define(version: 2018_09_06_133354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,20 @@ ActiveRecord::Schema.define(version: 2018_08_28_151735) do
     t.text "note_content"
     t.integer "user_id"
     t.boolean "public_note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reference_categories", force: :cascade do |t|
+    t.integer "category_id"
+    t.integer "reference_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "references", force: :cascade do |t|
+    t.string "title"
+    t.string "link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
