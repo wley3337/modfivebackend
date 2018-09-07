@@ -1,10 +1,11 @@
 class ReferencesController < ApplicationController
     before_action :mod_params, only: [:save, :remove]
+    
 
     def index
-        reference_params = params.require(:reference).permit(:offsetId)
-    debugger
-        reference_set = Reference.reference_set(reference_params["offsetId"])
+      
+    
+        reference_set = Reference.reference_set(params["offsetId"])
         
         if  reference_set.length < 300
             render json:  {references: reference_set, more?: false}
@@ -14,9 +15,9 @@ class ReferencesController < ApplicationController
     end
 
     def search
-    debugger
-        reference_params = params.require(:reference).permit(:categoryId)
-        render json: {references: References.references_by_category(reference_params["categoryId"])}
+
+        render json: {references: Reference.references_by_category(params["categoryId"])}
+    
     end
     
     def create
@@ -27,7 +28,7 @@ class ReferencesController < ApplicationController
         # validate for url uniquness return existing title
        if new_reference.valid?
         new_reference.save
-        render json: {success: true, } 
+        render json: {success: true, references: Reference.reference_set(0)}  
        else
     debugger
         render json: {success: false, errors: new_reference.errors.messages }

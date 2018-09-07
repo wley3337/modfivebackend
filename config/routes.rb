@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   patch '/users/my-page', to: 'users#update'
   delete '/notes', to: 'notes#destroy'
   get '/notes/search', to: 'notes#search_index'
-  get '/references/search', to: 'reference#search'
-  patch '/references/save', to: 'reference#save'
-  patch '/references/remove', to: 'reference#remove'
+  get '/references/search', to: 'references#search'
+  patch '/references/save', to: 'references#save'
+  patch '/references/remove', to: 'references#remove'
 
   resources :users, only: [:create]
   resources :notes, only: [:index]

@@ -1,10 +1,8 @@
 class NotesController < ApplicationController
-
+    skip_before_action :authenticate
     def index
         # return sets of 300 from last index bulk
-        note_params = params.require(:note).permit(:offsetId)
-    debugger
-        public_note_set = Notes.public_note_set(note_params["offsetId"])
+        public_note_set = Note.public_note_set(params["offsetId"])
 
         if public_note_set.length < 300
          render json:  {notes: public_note_set, more?: false}
@@ -15,9 +13,8 @@ class NotesController < ApplicationController
 
 
     def search_index
-        note_params = params.require(:note).permit(:offsetId, :searchTerm)
-    debugger
-        searched_public_note_set = Note.search_public_note_set(note_params["offsetId"], note_params["searchTerm"])
+      
+        searched_public_note_set = Note.search_public_note_set(params["offsetId"], params["searchTerm"])
 
         if searched_public_note_set.length < 300
             render json:  { notes: searched_public_note_set, more?: false }
