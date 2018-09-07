@@ -5,9 +5,9 @@ class NotesController < ApplicationController
         public_note_set = Note.public_note_set(params["offsetId"])
 
         if public_note_set.length < 300
-         render json:  {notes: public_note_set, more?: false}
+         render json:  {notes: public_note_set, more: false}
         else
-         render json:  {notes: public_note_set, more?: true}
+         render json:  {notes: public_note_set, more: true}
         end 
     end
 
@@ -17,9 +17,9 @@ class NotesController < ApplicationController
         searched_public_note_set = Note.search_public_note_set(params["offsetId"], params["searchTerm"])
 
         if searched_public_note_set.length < 300
-            render json:  { notes: searched_public_note_set, more?: false }
+            render json:  { notes: searched_public_note_set, more: false }
         else
-            render json:  { notes: searched_public_note_set, more?: true }
+            render json:  { notes: searched_public_note_set, more: true }
         end 
     end
 
