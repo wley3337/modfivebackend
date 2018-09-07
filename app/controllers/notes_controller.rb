@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
-    skip_before_action :authenticate
+    
     def index
-        # return sets of 300 from last index bulk
+        # return sets of 300 from last index bulk  
         public_note_set = Note.public_note_set(params["offsetId"])
 
         if public_note_set.length < 300
