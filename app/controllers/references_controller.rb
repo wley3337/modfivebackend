@@ -21,18 +21,29 @@ class ReferencesController < ApplicationController
     end
     
     def create
-    debugger
-        local_str_params = params.require(:reference).permit(:title, :link)
-        # validate for url uniquness return existing title
-        new_reference = Reference.new(local_str_params)
+        local_str_params = params.require(:reference).permit(:title, :link, category: {})
+
+        new_reference = Reference.new({title: local_str_params["title"], link: local_str_params["link"]})
         # validate for url uniquness return existing title
        if new_reference.valid?
+
         new_reference.save
-        render json: {success: true, references: Reference.reference_set(0)}  
+
+        new_reference.add_categories(local_str_params["category"]["existingCategory"]) if local_str_params["category"]["existingCategory"].length > 0
+
+        new_reference.add_new_categories(local_str_params["category"]["newCategory"]) if local_str_params["category"]["newCategory"].length > 0
+        current_user.references << new_reference
+        render json: {success: true, references: Reference.reference_set(0), new_reference: new_reference, userObj: current_user.serialize_user} 
+
        else
-    debugger
-        render json: {success: false, errors: new_reference.errors.messages }
-       end
+    
+        if new_reference.errors.messages[:link] === ["has already been taken"]
+            current_user.references << Reference.find_by(link: local_str_params["link"])
+            render json: {success: true, references: Reference.reference_set(0), userObj: current_user.serialize_user}
+        else
+            render json: {success: false, errors: new_reference.errors.messages }
+        end
+      end
     end
 
     def save
@@ -59,3 +70,5 @@ class ReferencesController < ApplicationController
         params.require(:reference).permit(:id)
     end 
 end
+
+
