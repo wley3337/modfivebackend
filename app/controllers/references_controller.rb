@@ -58,8 +58,8 @@ class ReferencesController < ApplicationController
     def remove
         # removes a reference from current users references.
         ref_to_remove = Reference.find(mod_params["id"])
-        ref_to_remove.saves = reference_to_save.saves - 1
-        current_user.delete(ref_to_remove)
+        ref_to_remove.saves = ref_to_remove.saves - 1
+        current_user.references.delete(ref_to_remove)
         render json: {success: true,  userObj: current_user.serialize_user}
     end 
 
