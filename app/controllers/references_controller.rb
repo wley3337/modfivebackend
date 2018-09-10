@@ -39,7 +39,7 @@ class ReferencesController < ApplicationController
     
         if new_reference.errors.messages[:link] === ["has already been taken"]
             existingReference = Reference.find_by(link: local_str_params["link"])
-            current_user.references << existingReference
+            current_user.references << existingReference if !current_user.references.include?(existingReference)
             render json: {success: true, references: Reference.reference_set(0), userObj: current_user.serialize_user, existingReference: existingReference}
         else
             render json: {success: false, errors: new_reference.errors.messages }
