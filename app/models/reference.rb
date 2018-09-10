@@ -27,8 +27,6 @@ class Reference < ApplicationRecord
     def add_new_categories(category_names)
         category_names.each{ |name| self.categories << Category.create({name: name})}
         self.save
-        debugger
-        
         self
     end 
 

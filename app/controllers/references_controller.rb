@@ -48,7 +48,6 @@ class ReferencesController < ApplicationController
     end
 
     def save
-    debugger
          # saves a reference to a users own reference
         reference_to_save = Reference.find(mod_params["id"])
         reference_to_save.saves = reference_to_save.saves + 1
@@ -57,7 +56,6 @@ class ReferencesController < ApplicationController
     end
 
     def remove
-    debugger
         # removes a reference from current users references.
         ref_to_remove = Reference.find(mod_params["id"])
         ref_to_remove.saves = reference_to_save.saves - 1
