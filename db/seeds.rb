@@ -43,9 +43,9 @@ while x <= 310
         public_note: true,
         user_id: 2
     )
-    n.categories << catArray[rand(0..11)]
-    n.categories << catArray[rand(0..11)]
-    n.categories << catArray[rand(0..11)]
+    n.categories << catArray[rand(0..4)]
+    n.categories << catArray[rand(5..8)]
+    n.categories << catArray[rand(9..11)]
     user1.notes << n
     x += 1
 end
@@ -57,9 +57,9 @@ while x <= 310
         public_note: true,
         user_id: 3
     )
-    n.categories << catArray[rand(0..11)]
-    n.categories << catArray[rand(0..11)]
-    n.categories << catArray[rand(0..11)]
+    n.categories << catArray[rand(0..4)]
+    n.categories << catArray[rand(5..8)]
+    n.categories << catArray[rand(9..11)]
     user2.notes << n
     x += 1
 end
@@ -71,9 +71,9 @@ while x <= 310
         public_note: true,
         user_id: 4
     )
-    n.categories << catArray[rand(0..11)]
-    n.categories << catArray[rand(0..11)]
-    n.categories << catArray[rand(0..11)]
+    n.categories << catArray[rand(0..4)]
+    n.categories << catArray[rand(5..8)]
+    n.categories << catArray[rand(9..11)]
     user3.notes << n
     x += 1
 end
@@ -86,9 +86,9 @@ while x <= 50
         public_note: false,
         user_id: 3
     )
-    n.categories << catArray[rand(0..11)]
-    n.categories << catArray[rand(0..11)]
-    n.categories << catArray[rand(0..11)]
+    n.categories << catArray[rand(0..4)]
+    n.categories << catArray[rand(5..8)]
+    n.categories << catArray[rand(9..11)]
     user2.notes << n
     x += 1
 end
@@ -100,9 +100,9 @@ while x <= 50
         public_note: false,
         user_id: 4
     )
-    n.categories << catArray[rand(0..11)]
-    n.categories << catArray[rand(0..11)]
-    n.categories << catArray[rand(0..11)]
+    n.categories << catArray[rand(0..4)]
+    n.categories << catArray[rand(5..8)]
+    n.categories << catArray[rand(9..11)]
     user3.notes << n
     x += 1
 end
