@@ -7,7 +7,9 @@ class Category < ApplicationRecord
 
 
     def serialize
-        {id: self.id, name: self.name, notes: self.category_notes}
+        {id: self.id, name: self.name}
+
+        # removed: notes: self.category_notes don't seem to need
     end
 
     def category_notes
