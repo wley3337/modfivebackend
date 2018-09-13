@@ -10,7 +10,7 @@ class Reference < ApplicationRecord
     end
 
     def self.reference_set(starting_id)
-        Reference.where(" id > ?", starting_id).limit(300).map{|reference| reference.serialize_reference}
+        Reference.where(" id > ?", starting_id).limit(50).map{|reference| reference.serialize_reference}
     end
 
     def self.references_by_category(category_id)

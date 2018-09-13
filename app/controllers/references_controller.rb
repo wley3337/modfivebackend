@@ -7,7 +7,7 @@ class ReferencesController < ApplicationController
     
         reference_set = Reference.reference_set(params["offsetId"])
         
-        if  reference_set.length < 300
+        if  reference_set.length < 50
             render json:  {references: reference_set, more: false}
         else
             render json:  {references: reference_set, more: true}

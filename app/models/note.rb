@@ -36,7 +36,7 @@ class Note < ApplicationRecord
     end
 
     def self.public_note_set(starting_id)
-        self.where("public_note = ? AND id > ?", true, starting_id).limit(300).map{|note| note.serialize_note}
+        self.where("public_note = ? AND id > ?", true, starting_id).limit(50).map{|note| note.serialize_note}
     end 
 
     def self.search_public_note_set(starting_id, search_term)

@@ -4,7 +4,7 @@ class NotesController < ApplicationController
         # return sets of 300 from last index bulk  
         public_note_set = Note.public_note_set(params["offsetId"])
 
-        if public_note_set.length < 300
+        if public_note_set.length < 50
          render json:  {notes: public_note_set, more: false}
         else
          render json:  {notes: public_note_set, more: true}
@@ -16,7 +16,7 @@ class NotesController < ApplicationController
       
         searched_public_note_set = Note.search_public_note_set(params["offsetId"], params["searchTerm"])
 
-        if searched_public_note_set.length < 300
+        if searched_public_note_set.length < 50
             render json:  { notes: searched_public_note_set, more: false }
         else
             render json:  { notes: searched_public_note_set, more: true }
