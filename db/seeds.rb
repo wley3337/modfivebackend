@@ -156,6 +156,13 @@ r11.categories << c3
 r11.categories << c4
 r11.categories << c5
 
+r12 = Reference.create(title: "Deploy Rails on Heroku", link: "https://medium.com/@kasiarosenb/deploying-your-rails-app-on-heroku-a2096dc40aac")
+r12.categories << c11
+r12.categories << c2
+r12.categories << c3
+r12.categories << c4
+r12.categories << c5
+
 
 
 # user reference assignments
