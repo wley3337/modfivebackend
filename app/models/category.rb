@@ -4,11 +4,8 @@ class Category < ApplicationRecord
     has_many :reference_categories
     has_many :references, through: :reference_categories
    
-
-
     def serialize
         {id: self.id, name: self.name}
-
         # removed: notes: self.category_notes don't seem to need
     end
 

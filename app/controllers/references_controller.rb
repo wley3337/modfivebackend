@@ -1,12 +1,9 @@
 class ReferencesController < ApplicationController
     before_action :mod_params, only: [:save, :remove]
-    
 
     def index
-      
-    
         reference_set = Reference.reference_set(params["offsetId"])
-        
+
         if  reference_set.length < 50
             render json:  {references: reference_set, more: false}
         else
@@ -15,9 +12,7 @@ class ReferencesController < ApplicationController
     end
 
     def search
-
         render json: {references: Reference.references_by_category(params["categoryId"])}
-    
     end
     
     def create
@@ -25,25 +20,25 @@ class ReferencesController < ApplicationController
 
         new_reference = Reference.new({title: local_str_params["title"], link: local_str_params["link"]})
         # validate for url uniquness return existing title
-       if new_reference.valid?
+        
+        if new_reference.valid?
 
-        new_reference.save
+            new_reference.save
 
-        new_reference.add_categories(local_str_params["category"]["existingCategory"]) if local_str_params["category"]["existingCategory"].length > 0
+            new_reference.add_categories(local_str_params["category"]["existingCategory"]) if local_str_params["category"]["existingCategory"].length > 0
 
-        new_reference.add_new_categories(local_str_params["category"]["newCategory"]) if local_str_params["category"]["newCategory"].length > 0
-        current_user.references << new_reference
-        render json: {success: true, references: Reference.reference_set(0), new_reference: new_reference, userObj: current_user.serialize_user} 
+            new_reference.add_new_categories(local_str_params["category"]["newCategory"]) if local_str_params["category"]["newCategory"].length > 0
+            current_user.references << new_reference
+            render json: {success: true, references: Reference.reference_set(0), new_reference: new_reference, userObj: current_user.serialize_user} 
 
-       else
-    
-        if new_reference.errors.messages[:link] === ["has already been taken"]
-            existingReference = Reference.find_by(link: local_str_params["link"])
-            current_user.references << existingReference if !current_user.references.include?(existingReference)
-            render json: {success: true, references: Reference.reference_set(0), userObj: current_user.serialize_user, existingReference: existingReference}
         else
-            render json: {success: false, errors: new_reference.errors.messages }
-        end
+            if new_reference.errors.messages[:link] === ["has already been taken"]
+                existingReference = Reference.find_by(link: local_str_params["link"])
+                current_user.references << existingReference if !current_user.references.include?(existingReference)
+                render json: {success: true, references: Reference.reference_set(0), userObj: current_user.serialize_user, existingReference: existingReference}
+            else
+                render json: {success: false, errors: new_reference.errors.messages }
+            end
       end
     end
 
@@ -65,9 +60,9 @@ class ReferencesController < ApplicationController
 
     private
 
-    def mod_params
-        params.require(:reference).permit(:id)
-    end 
+        def mod_params
+            params.require(:reference).permit(:id)
+        end 
 end
 
 

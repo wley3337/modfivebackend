@@ -37,7 +37,6 @@ user3 = User.create(username: "user3", first_name: "user3FristName", last_name: 
 catArray = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12]
 x=0
 while x <= 310 
-
     n = Note.create(
         note_content: Faker::Lovecraft.paragraph(rand(1..8)) + Faker::Lovecraft.paragraph(rand(1..8)),
         public_note: true,
@@ -51,7 +50,6 @@ while x <= 310
 end
 x=0
 while x <= 310 
-
     n = Note.create(
         note_content: Faker::Lovecraft.paragraph(rand(1..8)) + Faker::Lovecraft.paragraph(rand(1..8)),
         public_note: true,
@@ -65,7 +63,6 @@ while x <= 310
 end
 x=0
 while x <= 310 
-
     n = Note.create(
         note_content: Faker::Lovecraft.paragraph(rand(1..8)) + Faker::Lovecraft.paragraph(rand(1..8)),
         public_note: true,
@@ -77,10 +74,8 @@ while x <= 310
     user3.notes << n
     x += 1
 end
-
 x=0
 while x <= 50 
-
     n = Note.create(
         note_content: Faker::Lovecraft.paragraphs(10),
         public_note: false,
@@ -94,7 +89,6 @@ while x <= 50
 end
 x=0
 while x <= 50 
-
     n = Note.create(
         note_content: Faker::Lovecraft.paragraph(10),
         public_note: false,
@@ -106,8 +100,6 @@ while x <= 50
     user3.notes << n
     x += 1
 end
-
-
 
 # reference and category assignment
 

@@ -11,7 +11,6 @@ class NotesController < ApplicationController
         end 
     end
 
-
     def search_index
       
         searched_public_note_set = Note.search_public_note_set(params["offsetId"], params["searchTerm"])
@@ -33,7 +32,4 @@ class NotesController < ApplicationController
         end 
         render json:  {success: true,  userObj: current_user.serialize_user}
     end 
-
-    
-
 end

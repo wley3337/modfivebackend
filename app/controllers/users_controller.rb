@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
     
-   
     skip_before_action :authenticate, only: [:login, :create]
 
     def login
@@ -23,7 +22,7 @@ class UsersController < ApplicationController
         # local strong params
         new_user_params = params.require(:user).permit(:username, :firstName, :lastName, :startDate, :password)
         user = User.new(username: new_user_params["username"], first_name: new_user_params["firstName"], last_name: new_user_params["lastName"], password: new_user_params["password"], start_date: new_user_params["startDate"], roll: "student")
-        
+
         if user.valid?
             # validates user creation, logs new user in
             user.save
@@ -33,11 +32,9 @@ class UsersController < ApplicationController
             # if validation fails, responds with errors
             render json: {success: false, errors: user.errors.messages}
         end
-        
     end
 
     # methods below require authentication
-    
     def show
         render json:  {success: true,  userObj: current_user.serialize_user}
     end
@@ -48,17 +45,16 @@ class UsersController < ApplicationController
        public_note = update_params["note"]["public"] 
        all_category_ids = update_params["note"]["categoryId"]
        if update_params["note"]["noteId"]
-        note_change = Note.find(update_params["note"]["noteId"])
+            note_change = Note.find(update_params["note"]["noteId"])
             if note_change.user_id === user.id
                 note_change.update_note(update_params["note"]["noteObj"],all_category_ids, public_note)
             else
                 note_change = Note.creation(user, update_params["note"]["noteObj"],all_category_ids, public_note)
             end
        elsif
-         note_change = Note.creation(user, update_params["note"]["noteObj"],all_category_ids, public_note)
+            note_change = Note.creation(user, update_params["note"]["noteObj"],all_category_ids, public_note)
        end
        if update_params["note"]["newCategory"].length != 0
-       
             update_params["note"]["newCategory"].each do |new_cat|
                 new_category = Category.create(name: new_cat)
                 note_change.categories << new_category
@@ -66,20 +62,9 @@ class UsersController < ApplicationController
             end
        end
        render json: {success: true,  userObj: current_user.serialize_user}
-
-   
     end
 
     def destroy
         #delete user account and personal notes
     end 
-    
-
-
-
-  
-
-   
-
-
 end
