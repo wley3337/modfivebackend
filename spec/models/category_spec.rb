@@ -13,10 +13,9 @@ describe Category, type: :model do
   end 
 
   after(:context) do
-    @test_category.destroy
-    @n1.destroy
-    @n2.destroy
-    @user1.destroy
+    Category.destroy_all
+    User.destroy_all
+    Note.destroy_all
   end 
 
 

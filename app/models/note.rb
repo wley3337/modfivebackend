@@ -14,10 +14,14 @@ class Note < ApplicationRecord
     # def self.mine?
     #     self.all.select { |note| note.user_id == current_user.id}
     # end 
+    def add_categories(category_ids_array)
+        category_ids_array.each{ |id| self.categories << Category.find(id)} 
+        self
+    end
 
     def self.creation(user, content, category_ids, public_note)
         new_note = Note.create(user_id: user.id, note_content: content, public_note: public_note )
-        category_ids.each{ |id| new_note.categories << Category.find(id)} 
+        new_note.add_categories(category_ids)
         new_note.save
         new_note
     end 
