@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   patch '/users/my-page', to: 'users#update'
   delete '/notes', to: 'notes#destroy'
   
-  get '/notes/search/:offsetId', to: 'notes#search_index'
+  get '/notes/search/:offsetId/:searchTerm', to: 'notes#search_index'
   get '/notes/:offsetId', to: 'notes#index'
   get '/references/search/:offsetId/:searchTerm', to: 'references#search'
   get '/references/:offsetId', to: 'references#index'
