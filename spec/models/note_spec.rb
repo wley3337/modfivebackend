@@ -81,27 +81,37 @@ describe Note, type: :model do
 
 
   context '.public_note_set' do
-
-    it 'starts at a given note id non-inclusive' do 
+    before do 
       2.times do 
         Note.create(note_content: "Test Note", user: @user1, public_note: true)
       end
-      marker_note =Note.create(note_content: "Test Note", user: @user1, public_note: true)
-      3.times do 
+      @marker_note =Note.create(note_content: "Test Note", user: @user1, public_note: true)
+      @false_note = Note.create(note_content: "Test Note", user: @user1, public_note: false)
+      @next_note = Note.create(note_content: "Test Note", user: @user1, public_note: true)
+      49.times do 
         Note.create(note_content: "Test Note", user: @user1, public_note: true)
       end 
-     
-      expect(Note.public_note_set(marker_note.id).length).to eq(3)
+      @over_step_note = Note.create(note_content: "Test Note", user: @user1, public_note: true)
+    end
+
+    after do 
+      Category.destroy_all
+      User.destroy_all
+      Note.destroy_all
+    end 
+
+    it 'starts at a given note id non-inclusive' do 
+      expect(Note.public_note_set(@marker_note.id).first[:note]).to eq(@next_note)
     end 
 
     it 'only returns notes that are public' do 
-      marker_note =Note.create(note_content: "Test Note", user: @user1, public_note: true)
-      false_note = Note.create(note_content: "Test Note", user: @user1, public_note: false)
-      3.times do 
-        Note.create(note_content: "Test Note", user: @user1, public_note: true)
-      end 
-      expect(Note.public_note_set(marker_note.id)).not_to include(false_note)
+      expect(Note.public_note_set(@marker_note.id)).not_to include(@false_note)
     end
+
+    it 'only returns 50 elements' do 
+      expect(Note.public_note_set(@marker_note.id).length).to eq(50)
+      expect(Note.public_note_set(@marker_note.id)).not_to include(@over_step_note)
+    end 
 
   end 
 
