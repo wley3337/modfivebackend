@@ -5,8 +5,6 @@ class Note < ApplicationRecord
     accepts_nested_attributes_for :categories
     
     # limits the kind of notes category associations return with json
-
-   
     def self.public?
         self.all.select{ |note| note.public_note === true}
     end
@@ -14,6 +12,7 @@ class Note < ApplicationRecord
     # def self.mine?
     #     self.all.select { |note| note.user_id == current_user.id}
     # end 
+    
     def add_categories(category_ids_array)
         category_ids_array.each{ |id| self.categories << Category.find(id)} 
         self

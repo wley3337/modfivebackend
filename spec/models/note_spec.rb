@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+
 describe Note, type: :model do
 
   before(:context) do 
@@ -44,7 +45,7 @@ describe Note, type: :model do
     
       expect(Note.creation(@user1, testText,category_ids_array, public_note).categories).to eq([@test_category_2])
     end 
-    
+
     it 'creates new note with proper text' do 
       testText = "note creation"
       public_note = false
@@ -57,31 +58,49 @@ describe Note, type: :model do
 
   context '#serialize_note' do
   
-    xit 'correctly calls on category serilizer' do
-
+    it 'correctly calls on category serilizer' do
+      catTest = { id: @test_category_1.id, name: @test_category_1.name }
+      expect(@n1.serialize_note[:categories]).to eq([catTest])
     end
 
   end
 
   context '#update_note' do
-    xit 'clears old categories' do 
-
+  
+    it 'returns corectly updated note' do 
+      expect(@n1).to have_attributes(note_content: "Test Note")
+      updated_note = @n1.update_note("New Text", [@test_category_1.id], true)
+      expect(updated_note.note_content).to eq("New Text")
     end 
 
-    xit 'returns corectly updated note' do 
-
+    it 'clears old categories' do 
+      @n1.update_note("new text", [@test_category_2.id], true)
+      expect(@n1.categories).to include(@test_category_2)
     end 
   end
 
 
   context '.public_note_set' do
 
-    xit 'starts at a given note id' do 
-
+    it 'starts at a given note id non-inclusive' do 
+      2.times do 
+        Note.create(note_content: "Test Note", user: @user1, public_note: true)
+      end
+      marker_note =Note.create(note_content: "Test Note", user: @user1, public_note: true)
+      3.times do 
+        Note.create(note_content: "Test Note", user: @user1, public_note: true)
+      end 
+     
+      expect(Note.public_note_set(marker_note.id).length).to eq(3)
     end 
 
-    xit 'only returns notes that are public'do 
-
+    it 'only returns notes that are public' do 
+      marker_note =Note.create(note_content: "Test Note", user: @user1, public_note: true)
+      false_note = Note.create(note_content: "Test Note", user: @user1, public_note: false)
+      3.times do 
+        Note.create(note_content: "Test Note", user: @user1, public_note: true)
+      end 
+      expect(Note.public_note_set(marker_note.id)).not_to include(false_note)
     end
 
   end 
